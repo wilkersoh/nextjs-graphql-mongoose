@@ -5,9 +5,29 @@
 yarn dev
 ```
 
+# GraphQL 數據類型
+- Int
+- Float
+- String
+- Boolean
+- ID (unique)
+
+必須要有的值 + **!**
+eg:
+
+```graphQL
+id: ID!
+content: String!
+```
+
+# GraphQL 關機字
+api/schemas/index.js
+`type Query {}` and `type Mutation {}`都是graphQL裡的關鍵字
+一個代表查詢， 一個代表更變(crud)
+
 > visit api/graphql
 
-Get all users
+## Get all users
 
 ```graphQL
 {
@@ -19,7 +39,7 @@ Get all users
 }
 ```
 
-Query name from the users list
+## Query name from the users list
 
 ```graphQL
 query($name: String!){
@@ -36,6 +56,13 @@ query($name: String!){
   "name": "mojombo"
 }
 ```
+
+# Flow
+> api/schemas/index.js
+> api/resolves/index.js
+當執行graphQL **query** or **mutation**， 它就會trigger resolves裡的function
+如這項目的例子：
+schemas裡有兩個 javascript query function，在resolves裡getUser 它需要args，那它args會是什麼呢？我們需要看回去 schemas裡的getUser設定
 
 
 [link tutorial](https://www.smashingmagazine.com/2020/10/graphql-server-next-javascript-api-routes/)
