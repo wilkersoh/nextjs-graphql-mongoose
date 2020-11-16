@@ -39,7 +39,18 @@ api/schemas/index.js
 }
 ```
 
-## Query name from the users list
+# typeDefs and resolvers
+resolvers是用于解析typeDefs查询的解析器
+```graphQL
+// Query对应查询，getUsers是一个函数，返回的是数据
+const resolvers = {
+  Query: {
+    getUsers: async () => data
+  }
+}
+```
+
+# Query name from the users list
 
 ```graphQL
 query($name: String!){

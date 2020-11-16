@@ -3,7 +3,6 @@ import fetch from "isomorphic-unfetch";
 import Link from "next/link";
 
 const Index = ({ users }) => {
-  console.log(users);
   return (
     <>
       <Head>
@@ -12,8 +11,8 @@ const Index = ({ users }) => {
       </Head>
       <h1>GraphQL and Connection with mongoose</h1>
       <ul>
-        {users.map((user) => (
-          <li key={user.id}>
+        {users?.map((user) => (
+          <li key={user._id}>
             <Link href='/user/[id]' as={`/user/${user._id}`}>
               <a>{`User ${user.name}`}</a>
             </Link>
@@ -28,7 +27,7 @@ export async function getServerSideProps(context) {
   const response = await fetch("http://localhost:3000/api/users");
   const users = await response.json();
 
-  return { users };
+  return { props: { users } };
 }
 
 export default Index;
