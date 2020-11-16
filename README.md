@@ -66,3 +66,16 @@ schemas裡有兩個 javascript query function，在resolves裡getUser 它需要a
 
 
 [link tutorial](https://www.smashingmagazine.com/2020/10/graphql-server-next-javascript-api-routes/)
+
+# MongoMiddleware Flow
+> example from api/user/[id].js
+1. those cb function **async () => {}** will became /lib/api/mongo-middleware.js的handler
+2. trigger **connectToMongo**
+3. trigger **handler**
+4. when 3 is trigger, it will trigger /api/user/[id].js first
+5. after, call /lib/api/api-handler.js
+6. `handlers[method](res)` handlers is an objects functions
+7. `mongo-middleware.js` `async (req, res)` req and res 是從 handler pass 過來的,它叫做 curried function [stackoverflow](https://stackoverflow.com/questions/32782922/what-do-multiple-arrow-functions-mean-in-javascript?fbclid=IwAR0ZFecNchzZUnFT3DNQnytamYY9gi4o3Yp6XwhDsw0sw39IROqiVYhQSFg)
+
+** some warning after trigger
+> API resolved without sending a response for xxx this may result in stalled requests.

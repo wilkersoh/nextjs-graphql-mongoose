@@ -6,7 +6,7 @@ export default mongoMiddleware(async (req, res, connection, models) => {
     query: { id, name },
     method,
   } = req;
-
+  console.log(`-----inside user[id].js----`);
   apiHandler(res, method, {
     GET: (response) => {
       models.User.findById(id, (error, user) => {
