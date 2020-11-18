@@ -1,8 +1,31 @@
 import axios from "axios";
 
 export const resolvers = {
+  MongoUser: {
+    friends: () => {
+      return [{ _id: "abcd1231", name: "laoyeche", age: 25 }];
+    },
+    email: (parent) => `${parent.name}@pet.com`,
+  },
+
   Query: {
-    getMongoUsers: async () => {
+    getMongoUser: async (parent, { id }) => {
+      /**
+      {
+        getMongoUser(id: "5fb101828e17e41f47e2809e") {
+          name
+          email
+          friends {
+            name
+            age
+          }
+        }
+      }
+      */
+      const mongoUsers = await axios.get("http://localhost:3000/api/users");
+      return mongoUsers.data.filter((user) => user._id === id);
+    },
+    getMongoUsers: async (parent, args, context) => {
       /**
       query {
         getMongoUsers {
@@ -10,6 +33,8 @@ export const resolvers = {
         }
       }
        */
+      // console.log(parent);
+      // console.log("check ");
       try {
         const mongoUsers = await axios.get("http://localhost:3000/api/users");
         return mongoUsers.data.map(({ _id, name }) => ({
