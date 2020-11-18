@@ -1,6 +1,12 @@
 import mongoMiddleware from "../../lib/api/mongo-middleware";
 import apiHandler from "../../lib/api/api-handler";
 
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
+
 export default mongoMiddleware(async (req, res, connection, models) => {
   const { method } = req;
 
